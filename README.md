@@ -4,7 +4,7 @@ Udagram is a simple cloud application developed alongside the Udacity Cloud Engi
 
 The project is split into three parts:
 1. [The Simple Frontend](https://github.com/grutt/udacity-c2-frontend)
-A basic Ionic client web application which consumes the RestAPI Backend. 
+A basic Ionic client web application which consumes the RestAPI Backend.
 2. [The RestAPI Backend](https://github.com/grutt/udacity-c2-restapi), a Node-Express server which can be deployed to a cloud service.
 3. [The Image Filtering Microservice](https://github.com/grutt/udacity-c2-image-filter), the final project for the course. It is a Node-Express application which runs a simple Python script to process images.
 
@@ -35,7 +35,7 @@ It should accept two POST parameter:
 >    image_url: string - a public URL of a valid image file
 
 >    upload_image_signedUrl: string (OPTIONAL) - a URL which will allow a PUT request with the processed image
-    
+
 It should respond with 422 unprocessable if either POST parameters are invalid.
 
 It should require a token in the Auth Header or respond with 401 unauthorized.
@@ -43,7 +43,7 @@ It should require a token in the Auth Header or respond with 401 unauthorized.
 It should be versioned.
 
 > The matching token should be saved as an environment variable
-    
+
 > (TIP we broke this out into its own auth.router before, but you can access headers as part of the req.headers within your endpoint block)
 
 It should respond with the image as the body if upload_image_signedUrl is included in the request.
@@ -77,3 +77,19 @@ Try adding another column to your tables to save a separate key for your filtere
 #### (ADVANCED) Refactor Data Models
 Try adding a second OpenCV filter script and add an additional parameter to select which filter to use as a POST parameter
 
+# Create Env Vars
+
+Add to `.profile` file the next content (update values based on you own env):
+
+```bash
+export POSTGRES_USERNAME=sudoman
+export POSTGRES_PASSWORD=sudo-p4ssman
+export POSTGRES_DATABASE=udagramdb
+export POSTGRES_HOST=udagramdb.cwc1nqjmnlam.us-east-2.rds.amazonaws.com
+export POSTGRES_PORT=9834
+export DB_DIALECT=postgres
+export AWS_REGION=us-east-2
+export AWS_PROFILE=default
+export AWS_MEDIA_BUCKET=udagramucd-dev
+export JWT_SECRET=mysuper-secret-key
+```

@@ -1,20 +1,15 @@
 export const config = {
-  "dev": {
-    "username": "sudoman",
-    "password": "sudo-p4ssman",
-    "database": "udagramdb",
-    "host": "udagramdb.cwc1nqjmnlam.us-east-2.rds.amazonaws.com",
-    "port": 9834,
-    "dialect": "postgres",
-    "aws_reigion": "us-east-2",
-    "aws_profile": "default",
-    "aws_media_bucket": "udagramucd-dev"
+  "pg": {
+    "username": process.env.POSTGRES_USERNAME,
+    "password": process.env.POSTGRES_PASSWORD,
+    "database": process.env.POSTGRES_DATABASE,
+    "host": process.env.POSTGRES_HOST,
+    "port": process.env.POSTGRES_PORT,
+    "dialect": process.env.DB_DIALECT,
   },
-  "prod": {
-    "username": "",
-    "password": "",
-    "database": "udagram_prod",
-    "host": "",
-    "dialect": "postgres"
+  "aws": {
+    "aws_region": process.env.AWS_REGION,
+    "aws_profile": process.env.AWS_PROFILE,
+    "aws_media_bucket": process.env.AWS_MEDIA_BUCKET,
   }
 }

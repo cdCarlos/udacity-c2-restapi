@@ -2,7 +2,7 @@ import { Sequelize } from 'sequelize-typescript';
 import { config } from './config/config';
 
 
-const c = config.dev;
+const c = config.pg;
 
 // Instantiate new Sequelize instance!
 export const sequelize = new Sequelize({
@@ -12,7 +12,7 @@ export const sequelize = new Sequelize({
   "host": c.host,
   "port": c.port,
 
-  dialect: 'postgres',
+  dialect: c.dialect,
   storage: ':memory:',
 });
 
