@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "90c44738-86d0-440c-ac60-dcb7b70fb9e8",
+		"_postman_id": "0dbf34ac-823d-45f2-8392-7a2fc97bdcc4",
 		"name": "udacity-c2-restapi",
 		"description": "Requests that should work!",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -37,10 +37,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{host}}/api/v0/feed",
 							"host": [
@@ -84,12 +80,8 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
-							"raw": "{{host}}/api/v0/feed/:id",
+							"raw": "{{host}}/api/v0/feed/:id?",
 							"host": [
 								"{{host}}"
 							],
@@ -121,12 +113,8 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "{{host}}/api/v0/feed/:id",
+									"raw": "{{host}}/api/v0/feed/:id?",
 									"host": [
 										"{{host}}"
 									],
@@ -408,6 +396,17 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "fuck",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -568,6 +567,71 @@
 						"description": "Post a new item to the feed"
 					},
 					"response": []
+				},
+				{
+					"name": "/api/v0/feed/signed-url/:fileName",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1ad01629-c164-41ef-9d19-0a5fd13274af",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"The post returns a new item with an id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.not.eql(null);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"caption\": \"Hello\",\n    \"url\": \"test.jpg\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/v0/feed/signed-url/:fileName",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v0",
+								"feed",
+								"signed-url",
+								":fileName"
+							],
+							"variable": [
+								{
+									"key": "fileName",
+									"value": "image.png"
+								}
+							]
+						},
+						"description": "Get signed-url from AWS S3"
+					},
+					"response": []
 				}
 			],
 			"auth": {
@@ -600,6 +664,75 @@
 							""
 						]
 					}
+				}
+			]
+		},
+		{
+			"name": "aws-signed-url",
+			"item": [
+				{
+					"name": "aws-signed-url",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "image/jpeg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "file",
+							"file": {
+								"src": "/home/cc/Projects/Udacity/cloud-developer-nd/udacity-c2-restapi/mock/xander0.jpg"
+							}
+						},
+						"url": {
+							"raw": "https://udagramucd-dev.s3.us-east-2.amazonaws.com/xander0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA6PQAVJTGOAPVAHCL%2F20190627%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20190627T024035Z&X-Amz-Expires=300&X-Amz-Signature=1e41878a5989f6b76b40ca84b7d5fc61195bd412960f0ae9cb6268d7040f394a&X-Amz-SignedHeaders=host",
+							"protocol": "https",
+							"host": [
+								"udagramucd-dev",
+								"s3",
+								"us-east-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"xander0.jpg"
+							],
+							"query": [
+								{
+									"key": "X-Amz-Algorithm",
+									"value": "AWS4-HMAC-SHA256"
+								},
+								{
+									"key": "X-Amz-Credential",
+									"value": "AKIA6PQAVJTGOAPVAHCL%2F20190627%2Fus-east-2%2Fs3%2Faws4_request"
+								},
+								{
+									"key": "X-Amz-Date",
+									"value": "20190627T024035Z"
+								},
+								{
+									"key": "X-Amz-Expires",
+									"value": "300"
+								},
+								{
+									"key": "X-Amz-Signature",
+									"value": "1e41878a5989f6b76b40ca84b7d5fc61195bd412960f0ae9cb6268d7040f394a"
+								},
+								{
+									"key": "X-Amz-SignedHeaders",
+									"value": "host"
+								}
+							]
+						},
+						"description": "how to use a AWS signed url."
+					},
+					"response": []
 				}
 			]
 		}
